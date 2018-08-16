@@ -1,5 +1,5 @@
 
-Rational Model Generator
+# Rational Model Generator
 
 Implementation in Prolog of a Tp operator for logic programs with negation. 
 
