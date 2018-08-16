@@ -1,0 +1,31 @@
+
+
+del1(X,[X|L],L).
+del1(Y,[X|L],[X|M]) :- del1(Y,L,M).
+
+msetdifference(M,[],M).
+msetdifference(M,[H|T],Diff) :- del1(H,M,M1),msetdifference(M1,T,Diff).   
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+Das brauchen wir nicht fuer's Fluent Kalkuel
+
+member(X,[X|_]).
+member(X,[_|T]) :- member(X,T).
+
+submset([],_).
+submset([X|Rest],M) :- member(X,M),
+		       del1(X,M,M1),
+		       submset(Rest,M1).
+*/

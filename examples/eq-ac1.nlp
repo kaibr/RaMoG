@@ -1,0 +1,52 @@
+
+% Methode 1 - mit Gleichheits und AC1 Axiomen
+
+% Schon in der 4. Iteration reichen 2MB Stack nicht mehr aus ...
+% Die Gleichheitsaxiome sind toedlich, wen wundert's?
+
+ 
+% -------- Gleichheit
+
+% Reflexivitaet
+equals(X,X).
+
+% Symmetrie
+equals(X,Y) :- equals(Y,X).
+
+% Transitivitaet
+equals(X,Y) :- equals(X,Z),equals(Z,Y).
+
+% Substitutivitaet (fuer bag)
+equals(bag(X1,Y1),bag(X2,Y2)) :-
+	ac1_equals(X1,X2),
+	ac1_equals(Y1,Y2).
+
+% -------- AC1 Axiome
+
+% Assoziativitaet
+equals(bag(bag(X,Y),Z),bag(X,bag(Y,Z))).	
+
+% Kommutativitaet
+equals(bag(X,Y),bag(Y,X)).
+
+% 1-element
+equals(bag(X,emptybag),X).
+
+
+/*
+% ------- Fluent Kalkuel
+
+causes(S,[],S).
+causes(S,[A|P],G) :- 
+	action(C,A,E),
+	ac1_equals(bag(C,V),S),
+	causes(bag(V,E),P,G).
+
+% shooting scenario
+
+action(emptybag,shoot,emptybag).
+action(loaded,shoot,unloaded).
+action(bag(loaded,alive),shoot,bag(unloaded,dead)).
+
+*/
+

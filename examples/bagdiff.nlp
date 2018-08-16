@@ -1,0 +1,49 @@
+
+% Methode 2 - mit Multimengendifferenz
+
+
+
+del1(X,[X|L],L).
+del1(Y,[X|L],[X|M]) :- del1(Y,L,M).
+
+bagdiff(M,[],M).
+bagdiff(M,[H|T],Diff) :- 
+	del1(H,M,M1),
+	bagdiff(M1,T,Diff).   
+
+
+% rechtsassoziative Normalform
+
+nf(bag(bag(X,Y),Z),bag(X1,bag(Y1,Z1))) :-
+	nf(X,X1),nf(Y,Y1),nf(Z,Z1).
+
+
+% -------- AC1 Axiome
+
+% Assoziativitaet
+equals(bag(bag(X,Y),Z),bag(X,bag(Y,Z))).	
+
+% Kommutativitaet
+equals(bag(X,Y),bag(Y,X)).
+
+% 1-element
+equals(bag(X,emptybag),X).
+
+
+/*
+% ------- Fluent Kalkuel
+
+causes(S,[],S).
+causes(S,[A|P],G) :- 
+	action(C,A,E),
+	ac1_equals(bag(C,V),S),
+	causes(bag(V,E),P,G).
+
+% shooting scenario
+
+action(emptybag,shoot,emptybag).
+action(loaded,shoot,unloaded).
+action(bag(loaded,alive),shoot,bag(unloaded,dead)).
+
+*/
+

@@ -1,0 +1,62 @@
+
+% Methode 1 - mit AC1 Axiomen
+
+
+ac1_equals(X,X).
+
+% Substitutivitaet
+ac1_equals(bag(X1,Y1),bag(X2,Y2)) :-
+	ac1_equals(X1,X2),
+	ac1_equals(Y1,Y2),!.
+
+% Assoziativitaet
+ac1_equals(bag(bag(X,Y),Z),V) :-
+	ac1_equals(bag(X,bag(Y,Z)),V),!.	
+
+
+% Kommutativitaet
+ac1_equals(bag(X,Y),Z) :-
+	a1_equals(bag(Y,X),Z).	
+
+% 1-element
+ac1_equals(bag(X1,emptybag),X2) :-
+	ac1_equals(X1,X2),!.
+
+
+% Und jetzt mal ohne Kommutativitaet .. 
+
+a1_equals(X,X).
+
+% Substitutivitaet
+
+a1_equals(bag(X1,Y1),bag(X2,Y2)) :-
+	ac1_equals(X1,X2),
+	ac1_equals(Y1,Y2).
+
+% Assoziativitaet
+a1_equals(bag(bag(X,Y),Z),V) :-
+	ac1_equals(bag(X,bag(Y,Z)),V).	
+
+
+% 1-element
+a1_equals(bag(X1,emptybag),X2) :-
+	ac1_equals(X1,X2).
+
+
+/*
+% Fluent Kalkuel
+
+causes(S,[],S).
+causes(S,[A|P],G) :- 
+	action(C,A,E),
+	ac1_equals(bag(C,V),S),
+	causes(bag(V,E),P,G).
+
+% shooting scenario
+
+action(emptybag,shoot,emptybag).
+action(loaded,shoot,unloaded).
+action(bag(loaded,alive),shoot,bag(unloaded,dead)).
+
+*/
+
